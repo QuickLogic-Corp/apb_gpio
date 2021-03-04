@@ -150,11 +150,11 @@ module apb_gpiov2 #
 	    else begin // APB READ
 	       case (PADDR[11:0])
 		 `REG_RDSTAT: begin
-		    PRDATA[26:24] = r_gpio_dir[r_gpio_select];
-		    PRDATA[19:16] = r_gpio_inttype[r_gpio_select];
-                    PRDATA[12] = r_gpio_in[r_gpio_select];
-                    PRDATA[8] = r_gpio_out[r_gpio_select];
-		    PRDATA[NG_BITS:0] = r_gpio_select;
+		    PRDATA[26:24] <= r_gpio_dir[r_gpio_select];
+		    PRDATA[19:16] <= r_gpio_inttype[r_gpio_select];
+		    PRDATA[12] <= r_gpio_in[r_gpio_select];
+		    PRDATA[8] <= r_gpio_out[r_gpio_select];
+	            PRDATA[NG_BITS:0] <= r_gpio_select;
 		 end
 		 `REG_OUT0: begin
 		    if (`N_GPIO > 32)
