@@ -146,7 +146,7 @@ module apb_gpiov2 #(
             `REG_OUT3: begin
               if (`N_GPIO > 96) r_gpio_out[`N_GPIO-1 : 0] <= PWDATA[`N_GPIO-97 : 0];
             end
-          endcase  // case (PADDR[6:2])
+          endcase  // case (PADDR[11:0])
         end else begin  // APB READ
           case (PADDR[11:0])
             `REG_RDSTAT: begin
@@ -191,7 +191,7 @@ module apb_gpiov2 #(
             `REG_PIN3: begin
               if (`N_GPIO > 96) PRDATA[`N_GPIO-97:0] <= r_gpio_in[`N_GPIO-1:96];
             end
-          endcase  // case (PADDR[6:2])
+          endcase  // case (PADDR[11:0]])
         end  // else: !if(PWRITE)
       end  // if (PSEL && PENABLE)
     end  // else: !if(~HRESETn)
