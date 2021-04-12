@@ -77,7 +77,6 @@ module apb_gpiov2 #(
   genvar i;
 
   assign gpio_in_sync = r_gpio_in;
-  assign PREADY = 1'b1;
   assign PSLVERR = 1'b0;
 
 
@@ -102,10 +101,13 @@ module apb_gpiov2 #(
       r_gpio_dir <= '0;
       r_gpio_inttype <= '0;
       r_gpio_select <= '0;
+      PREADY <= 1;
     end else begin
       PRDATA <= 32'h0;
+      PREADY <= 0;
       if (PSEL && PENABLE) begin  //APB WRITE
         if (PWRITE) begin
+	  PREADY <= 1;
           case (PADDR[11:0])
             `REG_SETSEL: begin
               r_gpio_select <= PWDATA[NG_BITS:0];
@@ -148,6 +150,7 @@ module apb_gpiov2 #(
             end
           endcase  // case (PADDR[11:0])
         end else begin  // APB READ
+	  PREADY <= 1;
           case (PADDR[11:0])
             `REG_RDSTAT: begin
               PRDATA[26:24] <= r_gpio_dir[r_gpio_select];
